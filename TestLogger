@@ -21,9 +21,9 @@ class FileLogger extends Logger
 		 		$this->_file=$file;
 
 		 	    if(!file_exists($file))
-		 		{
+			    {
 		 				throw new Exception('File not exist');
-		 		}
+			    }
 		 }
 
 		 public  function write()
@@ -69,12 +69,12 @@ class StreamLogger extends Logger
  				$this->stdout=fopen($stream, 'r+');
  		}
 
-       public function write()
+      		public function write()
 		{
-            	fwrite($this->stdout, $this->text);
+            			fwrite($this->stdout, $this->text);
 
 				fclose($this->stdout);
-     	}
+     		}
 }
 
 $fileLoger=new FileLogger('log.txt');
