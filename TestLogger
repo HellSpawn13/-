@@ -1,0 +1,92 @@
+<?php
+
+abstract class Logger
+{
+		protected $text;
+
+		public function log($message)
+		{
+				$this->text=date("[Y-m-D H:i:s]").serialize($message);
+		}
+
+		public abstract function write();
+}
+
+class FileLogger extends Logger
+{
+		 private $_file;
+
+		 public function __construct($file)
+		 {
+		 		$this->_file=$file;
+
+		 	    if(!file_exists($file))
+		 		{
+		 				throw new Exception('File not exist');
+		 		}
+		 }
+
+		 public  function write()
+		 {
+		 		return file_put_contents($this->_file, $this->text, FILE_APPEND);	 		
+		 }
+}	  
+
+class BdLogger extends Logger
+{
+		private $bd;
+
+		public function __construct($host, $user, $bdname)
+		{		
+				$this->bd = new mysqli($host, $user, NULL, $bdname);
+
+				if($this->bd->connect_error)
+				{
+						throw new Exception('Connection error');
+				}
+	  	     
+
+	  }
+
+		public function write()
+	   {
+				$stmt=$this->bd->prepare("INSERT INTO user (`log`) VALUES (?)");
+	   		
+				$stmt->bind_param("s", $this->text);
+
+				$stmt->execute();
+
+				$stmt->close();
+		}
+}
+
+class StreamLogger extends Logger
+{
+ 		private $stdout;
+
+ 		public function __construct($stream)
+ 		{
+ 				$this->stdout=fopen($stream, 'r+');
+ 		}
+
+       public function write()
+		{
+            	fwrite($this->stdout, $this->text);
+
+				fclose($this->stdout);
+     	}
+}
+
+$fileLoger=new FileLogger('log.txt');
+$fileLoger->log('Error');
+$fileLoger->write();
+
+$bdLoger=new BdLogger('localhost','root','bd');
+$bdLoger->log('Error');
+$bdLoger->write();
+
+$streamLoger=new StreamLogger('php://stdout');
+$streamLoger->log('Error');
+$streamLoger->write();
+
+?>
