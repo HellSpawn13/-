@@ -45,11 +45,10 @@ class BdLogger extends Logger
 						throw new Exception('Connection error');
 				}
 	  	     
-
-	  }
+		}
 
 		public function write()
-	   {
+	  	{
 				$stmt=$this->bd->prepare("INSERT INTO user (`log`) VALUES (?)");
 	   		
 				$stmt->bind_param("s", $this->text);
