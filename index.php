@@ -1,11 +1,4 @@
 <?php	
-require('Config.php');
-require('ConfigDb.php');
-require('ConfigFile.php');
-require('ConfigStdout.php');
-require('Loger.php');
-require('ILoger.php');
-
 class f{
 	protected $error;
 	public function _construct($str='Error')
