@@ -6,7 +6,7 @@
     "autoload": {
         "classmap": ["Config.php","ConfigDb.php", "ConfigFile","ConfigStdout.php","ILoger.php","Loger.php","index.php"]
     }
-   "repositories":[
+   "repositories": [
         {
             "type":"git",
             "url":"https://github.com/HellSpawn13/Logger"
