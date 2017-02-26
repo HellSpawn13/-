@@ -13,7 +13,7 @@ function run($obj, $objlog){
 	$_log->log($objlog);
 	$_log->write();
 }
-
+//функция для логирования сообщений run(Путь логирования("File","Bd","Stdout"), объект логироания(массив, строкаб, объект, исключение));
 run("File", 'e');
 run("File", new f('Error'));
 
