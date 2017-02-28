@@ -1,7 +1,7 @@
 <?php
 class ILogger extends Logger
 {
-	public $resource;
+protected   $resource;
 	private function __construct($stock)//В stock попадает connect из Config..;
 	{
 		$this->resource=$stock;
